@@ -122,7 +122,7 @@ rule bam_rmdup:
     input:
         rules.bam_mark_duplicates.output.out
     output:
-        "{assayType}/samtools/rmdup/{reference_version}/{runID}/{library}.bam"
+        "{assayType}/{project}/{runID}/samtools/rmdup/{reference_version}/{library}.bam"
     shell:
         "samtools rmdup {input} {output}"
 
@@ -133,7 +133,7 @@ rule bam_index:
     input:
         rules.bam_rmdup.output
     output:
-        "{assayType}/samtools/rmdup/{reference_version}/{runID}/{library}.bam.bai"
+        "{assayType}/{project}/{runID}/samtools/rmdup/{reference_version}/{library}.bam.bai"
     shell:
         "samtools index {input} {output}"
 
@@ -147,8 +147,8 @@ rule_bam_insert_size:
     input:
         rules.bam_rmdup.output
     output:
-        metrics = "{assayType}/picardTools/CollectInsertSizeMetrics/{reference_version}/{runID}/{library}.insert_size_metrics.txt",
-        histogram = "{assayType}/picardTools/CollectInsertSizeMetrics/{reference_version}/{runID}/{library}.histogram.pdf"
+        metrics = "{assayType}/{project}/{runID}/picardTools/CollectInsertSizeMetrics/{reference_version}/{library}.insert_size_metrics.txt",
+        histogram = "{assayType}/{project}/{runID}/picardTools/CollectInsertSizeMetrics/{reference_version}/{library}.histogram.pdf"
     shell:
         """
             java -Djava.io.tmpdir={params.temp} \
