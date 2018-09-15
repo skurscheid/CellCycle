@@ -104,7 +104,7 @@ rule bam_mark_duplicates:
     input:
         rules.bam_sort.output
     output:
-        out= temp("{assayType}/{project}/{runID}/picardTools/MarkDuplicates/{reference_version}/{library}.bam")
+        out= temp("{assayType}/{project}/{runID}/picardTools/MarkDuplicates/{reference_version}/{library}.bam"),
         metrics = "{assayType}/{project}/{runID}/picardTools/MarkDuplicates/{reference_version}/{library}.metrics.txt"
     shell:
         """
@@ -138,7 +138,7 @@ rule bam_index:
         "samtools index {input} {output}"
 
 
-rule_bam_insert_size:
+rule bam_insert_size:
     version:
         "1.0"
     params:

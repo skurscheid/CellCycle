@@ -26,8 +26,8 @@ rule run_fastp:
     threads:
         8
     input:
-        read1 = lambda wildcards: dataDir + wildcards["project"] + "/" + wildcards["assayType"] + "/" + wildcards["runID"] + "/" + config["samples"][wildcards["project"]][wildcards["assayType"]][wildcards["runID"]][wildcards["library"]][0],
-        read2 = lambda wildcards: dataDir + wildcards["project"] + "/" +wildcards["assayType"] + "/" + wildcards["runID"] + "/" + config["samples"][wildcards["project"]][wildcards["assayType"]][wildcards["runID"]][wildcards["library"]][1]
+        read1 = lambda wildcards: dataDir + wildcards["assayType"] + "/" wildcards["project"] + "/" + wildcards["runID"] + "/" + config["samples"][wildcards["project"]][wildcards["assayType"]][wildcards["runID"]][wildcards["library"]][0],
+        read2 = lambda wildcards: dataDir + wildcards["assayType"] + "/" wildcards["project"] + "/" + wildcards["runID"] + "/" + config["samples"][wildcards["project"]][wildcards["assayType"]][wildcards["runID"]][wildcards["library"]][1]
     output:
         trimmed_read1 = "{assayType}/{project}/{runID}/fastp/trimmed/{library}.end1.fastq.gz",
         trimmed_read2 = "{assayType}/{project}/{runID}/fastp/trimmed/{library}.end2.fastq.gz",
