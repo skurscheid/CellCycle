@@ -7,6 +7,8 @@ import os
 
 REF_GENOME = config["references"]["active"]
 REF_VERSION = config["references"][REF_GENOME]["version"]
+RUN_ID = "N08851_SK_LR1807201_SEQ"
+PROJECT_ID = "LR1807201"
 
 rule:
     version:

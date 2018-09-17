@@ -9,23 +9,9 @@ from snakemake.exceptions import MissingInputException
 import os
 
 """
-Rules for running deepTools QC/QC on ChIP-Seq data
+Rules for running deepTools QC on ChIP-Seq data
 For usage, include this in your workflow.
 """
-
-# global functions
-def get_sample_labels(wildcards):
-    sl = []
-    runIDs = config["samples"][wildcards["assayType"]][wildcards["project"]]["runID"]
-    for i in runIDs:
-        for k in config["samples"]wildcards["assayType"]][wildcards["project"]][i].keys():
-            sl.append(k)
-    return(sl)
-
-REF_VERSION = "GRCh38_ensembl84"
-RUN_ID = "N08851_SK_LR1807201_SEQ"
-PROJECT_ID = "LR1807201"
-home = os.environ['HOME']
 
 rule multiBamSummary:
     version:
