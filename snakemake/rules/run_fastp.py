@@ -18,16 +18,16 @@ import fnmatch
 from snakemake.exceptions import MissingInputException
 
 home = os.environ['HOME']
-dataDir = "/Data/TALENs/"
+dataDir = home + "/Data/Tremethick/CellCycle/"
 
 rule run_fastp:
     version:
         "1.2"
     threads:
-        8
+        4
     input:
-        read1 = lambda wildcards: dataDir + wildcards["assayType"] + "/" + wildcards["project"] + "/" + wildcards["runID"] + "/" + config["samples"][wildcards["assayType"]][wildcards["project"]][wildcards["runID"]][wildcards["library"]][0],
-        read2 = lambda wildcards: dataDir + wildcards["assayType"] + "/" + wildcards["project"] + "/" + wildcards["runID"] + "/" + config["samples"][wildcards["assayType"]][wildcards["project"]][wildcards["runID"]][wildcards["library"]][1]
+        read1 = lambda wildcards: dataDir + wildcards["assayType"] + "/" + wildcards["project"] + "/" + wildcards["runID"] + "/raw_data/" + config["samples"][wildcards["assayType"]][wildcards["project"]][wildcards["runID"]][wildcards["library"]][0],
+        read2 = lambda wildcards: dataDir + wildcards["assayType"] + "/" + wildcards["project"] + "/" + wildcards["runID"] + "/raw_data/" + config["samples"][wildcards["assayType"]][wildcards["project"]][wildcards["runID"]][wildcards["library"]][1]
     output:
         trimmed_read1 = "{assayType}/{project}/{runID}/fastp/trimmed/{library}.end1.fastq.gz",
         trimmed_read2 = "{assayType}/{project}/{runID}/fastp/trimmed/{library}.end2.fastq.gz",
