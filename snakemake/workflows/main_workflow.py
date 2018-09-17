@@ -63,7 +63,8 @@ rule execute_deepTools_QC:
                project = PROJECT_ID,
                runID = RUN_ID,
                reference_version = REF_VERSION,
-               condition = ["G1", "M"])
+               condition = ["G1", "M"],
+               suffix = ["png", "tab"])
 
 rule all:
     input:
