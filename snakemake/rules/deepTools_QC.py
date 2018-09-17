@@ -13,6 +13,21 @@ Rules for running deepTools QC on ChIP-Seq data
 For usage, include this in your workflow.
 """
 
+# functions
+def librariesPerCondition(wildcards):
+    libs = []
+    libs = expand("{assayType}/{project}/{runID}/samtools/rmdup/{reference_version}/{library}{replicate}.{suffix}",
+                  assayType = "ChIP-Seq",
+                  project = PROJECT_ID,
+                  runID = RUN_ID,
+                  reference_version = REF_VERSION,
+                  library = [z \
+                              for y in config["samples"]["ChIP-Seq"]["conditions"][RUN_ID][wildcards["condition"]].keys() \
+                                  for z in config["samples"]["ChIP-Seq"]["conditions"][RUN_ID][wildcards["condition"]][y]],
+                  replicate = ["-1", "-2"],
+                  suffix = ["bam"])
+    return(libs)
+
 rule multiBamSummary:
     version:
         "2"
@@ -22,22 +37,7 @@ rule multiBamSummary:
     threads:
         32
     input:
-        expand("{assayType}/{project}/{runID}/samtools/rmdup/{reference_version}/{library}{replicate}.{suffix}",
-               assayType = "ChIP-Seq",
-               project = PROJECT_ID,
-               runID = RUN_ID,
-               reference_version = REF_VERSION,
-               library = lambda wildcards: [ y for y in config["samples"]["ChIP-Seq"]["conditions"][RUN_ID][wildcards["condition"]]["ChIP"] ],
-               replicate = ["-1", "-2"],
-               suffix = ["bam"]),
-        expand("{assayType}/{project}/{runID}/samtools/rmdup/{reference_version}/{library}{replicate}.{suffix}",
-               assayType = "ChIP-Seq",
-               project = PROJECT_ID,
-               runID = RUN_ID,
-               reference_version = REF_VERSION,
-               library = lambda wildcards: [ y for y in config["samples"]["ChIP-Seq"]["conditions"][RUN_ID][wildcards["condition"]]["Input"] ],
-               replicate = ["-1", "-2"],
-               suffix = ["bam"])
+        librariesPerCondition
     output:
         npz = "{assayType}/{project}/{runID}/deepTools/multiBamSummary/{reference_version}/{condition}/results.npz"
     shell:
@@ -98,22 +98,7 @@ rule bamPEFragmentSize:
     threads:
         32
     input:
-        expand("{assayType}/{project}/{runID}/samtools/rmdup/{reference_version}/{library}{replicate}.{suffix}",
-               assayType = "ChIP-Seq",
-               project = PROJECT_ID,
-               runID = RUN_ID,
-               reference_version = REF_VERSION,
-               library = [ y for y in config["samples"]["ChIP-Seq"]["conditions"][RUN_ID][wildcards["condition"]]["ChIP"] ],
-               replicate = ["-1", "-2"],
-               suffix = ["bam"]),
-        expand("{assayType}/{project}/{runID}/samtools/rmdup/{reference_version}/{library}{replicate}.{suffix}",
-               assayType = "ChIP-Seq",
-               project = PROJECT_ID,
-               runID = RUN_ID,
-               reference_version = REF_VERSION,
-               library = [ y for y in config["samples"]["ChIP-Seq"]["conditions"][RUN_ID][wildcards["condition"]]["Input"] ],
-               replicate = ["-1", "-2"],
-               suffix = ["bam"])
+        librariesPerCondition
     output:
         "{assayType}/{project}/{runID}/deepTools/bamPEFragmentSize/{reference_version}/{condition}/histogram.png"
     shell:
@@ -131,22 +116,7 @@ rule plotFingerprint:
     threads:
         32
     input:
-        expand("{assayType}/{project}/{runID}/samtools/rmdup/{reference_version}/{library}{replicate}.{suffix}",
-               assayType = "ChIP-Seq",
-               project = PROJECT_ID,
-               runID = RUN_ID,
-               reference_version = REF_VERSION,
-               library = [ y for y in config["samples"]["ChIP-Seq"]["conditions"][RUN_ID][wildcards["condition"]]["ChIP"] ],
-               replicate = ["-1", "-2"],
-               suffix = ["bam"]),
-        expand("{assayType}/{project}/{runID}/samtools/rmdup/{reference_version}/{library}{replicate}.{suffix}",
-               assayType = "ChIP-Seq",
-               project = PROJECT_ID,
-               runID = RUN_ID,
-               reference_version = REF_VERSION,
-               library = [ y for y in config["samples"]["ChIP-Seq"]["conditions"][RUN_ID][wildcards["condition"]]["Input"] ],
-               replicate = ["-1", "-2"],
-               suffix = ["bam"])
+        librariesPerCondition
     output:
         "{assayType}/{project}/{runID}/deepTools/plotFingerprint/{reference_version}/{condition}/fingerprints.png"
     shell:
