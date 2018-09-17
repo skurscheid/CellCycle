@@ -27,7 +27,7 @@ rule multiBamSummary:
                project = PROJECT_ID,
                runID = RUN_ID,
                reference_version = REF_VERSION,
-               library = [ y for y in config["samples"]["ChIP-Seq"]["conditions"][RUN_ID][wildcards["condition"]]["ChIP"] ],
+               library = lambda wildcards: [ y for y in config["samples"]["ChIP-Seq"]["conditions"][RUN_ID][wildcards["condition"]]["ChIP"] ],
                replicate = ["-1", "-2"],
                suffix = ["bam"]),
         expand("{assayType}/{project}/{runID}/samtools/rmdup/{reference_version}/{library}{replicate}.{suffix}",
@@ -35,7 +35,7 @@ rule multiBamSummary:
                project = PROJECT_ID,
                runID = RUN_ID,
                reference_version = REF_VERSION,
-               library = [ y for y in config["samples"]["ChIP-Seq"]["conditions"][RUN_ID][wildcards["condition"]]["Input"] ],
+               library = lambda wildcards: [ y for y in config["samples"]["ChIP-Seq"]["conditions"][RUN_ID][wildcards["condition"]]["Input"] ],
                replicate = ["-1", "-2"],
                suffix = ["bam"])
     output:
