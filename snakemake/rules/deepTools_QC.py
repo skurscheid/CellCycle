@@ -28,12 +28,22 @@ def librariesPerCondition(wildcards):
                   suffix = ["bam"])
     return(libs)
 
+def sampleLabelsPerCondition(wildcards):
+    labels = []
+    labels = expand("{library}{replicate}",
+                    library = [z \
+                                for y in config["samples"]["ChIP-Seq"]["conditions"][RUN_ID][wildcards["condition"]].keys() \
+                                    for z in config["samples"]["ChIP-Seq"]["conditions"][RUN_ID][wildcards["condition"]][y]],
+                    replicate = ["-1", "-2"])
+    return(labels)
+
 rule multiBamSummary:
     version:
         "2"
     params:
         deepTools_dir = home + config["program_parameters"]["deepTools"]["deepTools_dir"],
-        binSize = config["program_parameters"]["deepTools"]["binSize"]
+        binSize = config["program_parameters"]["deepTools"]["binSize"],
+        sampleLabels = sampleLabelsPerCondition
     threads:
         32
     input:
@@ -44,6 +54,7 @@ rule multiBamSummary:
         """
             {params.deepTools_dir}/multiBamSummary bins --bamfiles {input} \
                                                         --numberOfProcessors {threads} \
+                                                        --labels {params.sampleLabels} \
                                                         --centerReads \
                                                         --binSize {params.binSize} \
                                                         --outFileName {output.npz}
@@ -55,7 +66,8 @@ rule plotCorrelation_heatmap:
         "2"
     params:
         deepTools_dir = home + config["program_parameters"]["deepTools"]["deepTools_dir"],
-        plotTitle = "Correlation heatmap - read counts"
+        plotTitle = "Correlation heatmap - read counts",
+        sampleLabels = sampleLabelsPerCondition
     input:
         npz = rules.multiBamSummary.output.npz
     output:
@@ -67,6 +79,7 @@ rule plotCorrelation_heatmap:
                                                    --corMethod spearman \
                                                    --skipZeros \
                                                    --plotTitle "{params.plotTitle}" \
+                                                   --labels {params.samplesLables} \
                                                    --whatToPlot heatmap \
                                                    --colorMap RdYlBu \
                                                    --plotNumbers \
@@ -79,7 +92,8 @@ rule plotPCA:
         "2"
     params:
         deepTools_dir = home + config["program_parameters"]["deepTools"]["deepTools_dir"],
-        plotTitle = "PCA - read counts"
+        plotTitle = "PCA - read counts",
+        sampleLabels = sampleLabelsPerCondition
     input:
         npz = rules.multiBamSummary.output.npz
     output:
@@ -87,6 +101,7 @@ rule plotPCA:
     shell:
         """
             {params.deepTools_dir}/plotPCA --corData {input.npz} \
+                                           --labels {params.samplesLables} \
                                            --plotFile {output.png} \
                                            --plotTitle "{params.plotTitle}"
         """
@@ -94,7 +109,8 @@ rule plotPCA:
 rule bamPEFragmentSize:
     params:
         deepTools_dir = home + config["program_parameters"]["deepTools"]["deepTools_dir"],
-        plotTitle = "BAM PE fragment size"
+        plotTitle = "BAM PE fragment size",
+        sampleLabels = sampleLabelsPerCondition
     threads:
         32
     input:
@@ -105,6 +121,7 @@ rule bamPEFragmentSize:
         """
             {params.deepTools_dir}/bamPEFragmentSize --bamfiles {input} \
                                                      --numberOfProcessors {threads} \
+                                                     --samplesLabel {params.samplesLables}\
                                                      --histogram {output}
         """
 
@@ -112,7 +129,8 @@ rule bamPEFragmentSize:
 rule plotFingerprint:
     params:
         deepTools_dir = home + config["program_parameters"]["deepTools"]["deepTools_dir"],
-        plotTitle = "BAM PE fingerprint"
+        plotTitle = "BAM PE fingerprint",
+        sampleLabels = sampleLabelsPerCondition
     threads:
         32
     input:
@@ -125,6 +143,7 @@ rule plotFingerprint:
                                                    --numberOfProcessors {threads} \
                                                    --centerReads \
                                                    --plotTitle "{params.plotTitle}" \
+                                                   --labels {params.sampleLabels} \
                                                    --skipZeros \
                                                    --plotFile {output}
         """
