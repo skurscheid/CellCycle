@@ -87,39 +87,44 @@
         "YL1M" : ["YL1M-1", "YL1M-2"]
       }
     },
-    "conditions" : ["M", "G1"],
-    "M" :
+    "conditions" :
     {
-      "ChIP" :
+      "N08851_SK_LR1807201_SEQ" :
       {
-        "ACTR6M" : ["ACTR6M-1", "ACTR6M-2"],
-        "ANP32M" : ["ANP32M-1", "ANP32M-2"],
-        "H2AM" : ["H2AM-1", "H2AM-2"],
-        "H2AZM" : ["H2AZM-1", "H2AZM-2"],
-        "TIP60M" : ["TIP60M-1", "TIP60M-2"],
-        "WTM" : ["WTM-1", "WTM-2"],
-        "YL1M" : ["YL1M-1", "YL1M-2"]
-      },
-      "Input" :
-      {
-        "INPUTM" : ["INPUTM-1", "INPUTM-2"]
-      }
-    },
-    "G1" :
-    {
-      "ChIP" :
-      {
-        "ACTR6G1" : ["ACTR6G1-1", "ACTR6G1-2"],
-        "ANP32G1" : ["ANP32G1-1", "ANP32G1-2"],
-        "H2AG1" : ["H2AG1-1", "H2AG1-2"],
-        "H2AZG1" : ["H2AZG1-1", "H2AZG1-2"],
-        "TIP60G1" : ["TIP60G1-1", "TIP60G1-2"],
-        "WTG1" : ["WTG1-1", "WTG1-2"],
-        "YL1G1" : ["YL1G1-1", "YL1G1-2"]
-      },
-      "Input" :
-      {
-        "INPUTG1" : ["INPUTG1-1", "INPUTG1-2"]
+        "M" :
+        {
+          "ChIP" :
+          {
+            "ACTR6M" : ["ACTR6M-1", "ACTR6M-2"],
+            "ANP32M" : ["ANP32M-1", "ANP32M-2"],
+            "H2AM" : ["H2AM-1", "H2AM-2"],
+            "H2AZM" : ["H2AZM-1", "H2AZM-2"],
+            "TIP60M" : ["TIP60M-1", "TIP60M-2"],
+            "WTM" : ["WTM-1", "WTM-2"],
+            "YL1M" : ["YL1M-1", "YL1M-2"]
+          },
+          "Input" :
+          {
+            "INPUTM" : ["INPUTM-1", "INPUTM-2"]
+          }
+        },
+        "G1" :
+        {
+          "ChIP" :
+          {
+            "ACTR6G1" : ["ACTR6G1-1", "ACTR6G1-2"],
+            "ANP32G1" : ["ANP32G1-1", "ANP32G1-2"],
+            "H2AG1" : ["H2AG1-1", "H2AG1-2"],
+            "H2AZG1" : ["H2AZG1-1", "H2AZG1-2"],
+            "TIP60G1" : ["TIP60G1-1", "TIP60G1-2"],
+            "WTG1" : ["WTG1-1", "WTG1-2"],
+            "YL1G1" : ["YL1G1-1", "YL1G1-2"]
+          },
+          "Input" :
+          {
+            "INPUTG1" : ["INPUTG1-1", "INPUTG1-2"]
+          }
+        }
       }
     }
   }
