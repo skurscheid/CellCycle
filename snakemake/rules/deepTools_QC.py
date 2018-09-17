@@ -79,7 +79,7 @@ rule plotCorrelation_heatmap:
                                                    --corMethod spearman \
                                                    --skipZeros \
                                                    --plotTitle "{params.plotTitle}" \
-                                                   --labels {params.samplesLables} \
+                                                   --labels {params.sampleLabels} \
                                                    --whatToPlot heatmap \
                                                    --colorMap RdYlBu \
                                                    --plotNumbers \
@@ -101,7 +101,7 @@ rule plotPCA:
     shell:
         """
             {params.deepTools_dir}/plotPCA --corData {input.npz} \
-                                           --labels {params.samplesLables} \
+                                           --labels {params.sampleLabels} \
                                            --plotFile {output.png} \
                                            --plotTitle "{params.plotTitle}"
         """
@@ -121,7 +121,7 @@ rule bamPEFragmentSize:
         """
             {params.deepTools_dir}/bamPEFragmentSize --bamfiles {input} \
                                                      --numberOfProcessors {threads} \
-                                                     --samplesLabel {params.samplesLables}\
+                                                     --samplesLabel {params.sampleLabels}\
                                                      --histogram {output}
         """
 
