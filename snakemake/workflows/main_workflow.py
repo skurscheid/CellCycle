@@ -23,7 +23,8 @@ include:
     include_prefix + "run_fastp.py"
 include:
     include_prefix + "run_alignment.py"
-
+include:
+    include_prefix + "deepTools_QC.py"
 
 rule execute_collectInsertSize:
     input:
@@ -34,6 +35,33 @@ rule execute_collectInsertSize:
                 runID = "N08851_SK_LR1807201_SEQ",
                 library = [x for x in config["samples"]["ChIP-Seq"]["LR1807201"]["N08851_SK_LR1807201_SEQ"].keys()],
                 suffix = ["histogram.pdf", "insert_size_metrics.txt"])
+
+rule execute_deepTools_QC:
+    input:
+        expand("{assayType}/{project}/{runID}/deepTools/plotFingerprint/{reference_version}/{condition}/fingerprints.png",
+               assayType = "ChIP-Seq",
+               project = PROJECT_ID,
+               runID = RUN_ID,
+               reference_version = REF_VERSION,
+               condition = ["G1", "M"]),
+        expand("{assayType}/{project}/{runID}/deepTools/bamPEFragmentSize/{reference_version}/{condition}/histogram.png",
+               assayType = "ChIP-Seq",
+               project = PROJECT_ID,
+               runID = RUN_ID,
+               reference_version = REF_VERSION,
+               condition = ["G1", "M"]),
+        expand("{assayType}/{project}/{runID}/deepTools/plotPCA/{reference_version}/{condition}/PCA_readCounts.png",
+               assayType = "ChIP-Seq",
+               project = PROJECT_ID,
+               runID = RUN_ID,
+               reference_version = REF_VERSION,
+               condition = ["G1", "M"]),
+        expand("{assayType}/{project}/{runID}/deepTools/plotCorrelation/{reference_version}/{condition}/heatmap_SpearmanCorr_readCounts.{suffix}",
+               assayType = "ChIP-Seq",
+               project = PROJECT_ID,
+               runID = RUN_ID,
+               reference_version = REF_VERSION,
+               condition = ["G1", "M"])
 
 rule all:
     input:
