@@ -14,21 +14,15 @@ Rules for running deepTools analysis on ChIP-Seq data
 For usage, include this in your workflow.
 """
 
-rule all:
-    input:
-        expand("{assayType}/{project}/{runID}/deepTools/bamCoverage/{reference_version}/{library}_{suffix}",
-               assayType = "ChIP-Seq",
-               project = PROJECT_ID
-               reference_version = REF_VERSION,
-               runID = RUN_ID,
-               library = [x for x in config["samples"]["ChIP-Seq"][PROJECT_ID][RUN_ID].keys()],
-               suffix = "RPKM.bw"),
-        expand("{assayType}/{project}/{runID}/deepTools/scale-region/{reference_version}/{region}/matrix_{suffix}.gz",
-               assayType = "ChIP-Seq",
-               project = PROJECT_ID
-               reference_version = REF_VERSION,
-               runID = RUN_ID,
-               region = ["allGenes"])
+#rule all:
+#    input:
+#        expand("{assayType}/{project}/{runID}/deepTools/bamCoverage/{reference_version}/{library}_{suffix}",
+#               assayType = "ChIP-Seq",
+#               project = PROJECT_ID
+#               reference_version = REF_VERSION,
+#               runID = RUN_ID,
+#               library = [x for x in config["samples"]["ChIP-Seq"][PROJECT_ID][RUN_ID].keys()],
+#               suffix = "RPKM.bw"),
 
 
 def get_computeMatrix_input(wildcards):
