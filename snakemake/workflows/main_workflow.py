@@ -27,6 +27,9 @@ include:
     include_prefix + "run_alignment.py"
 include:
     include_prefix + "deepTools_QC.py"
+include:
+    include_prefix + "deepTools_plotting.py"
+
 
 rule execute_collectInsertSize:
     input:
@@ -66,6 +69,16 @@ rule execute_deepTools_QC:
                reference_version = REF_VERSION,
                condition = ["G1", "M"],
                suffix = ["png", "tab"])
+
+
+rule execute_deepTools_plotting:
+    input:
+        expand("{assayType}/{project}/{runID}/deepTools/scale-region/{reference_version}/{region}/matrix_{suffix}.gz",
+               assayType = "ChIP-Seq",
+               project = PROJECT_ID
+               reference_version = REF_VERSION,
+               runID = RUN_ID,
+               region = ["allGenes"])
 
 
 rule all:
