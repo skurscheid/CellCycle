@@ -38,6 +38,7 @@ rule execute_collectInsertSize:
                 library = [x for x in config["samples"]["ChIP-Seq"]["LR1807201"]["N08851_SK_LR1807201_SEQ"].keys()],
                 suffix = ["histogram.pdf", "insert_size_metrics.txt"])
 
+
 rule execute_deepTools_QC:
     input:
         expand("{assayType}/{project}/{runID}/deepTools/plotFingerprint/{reference_version}/{condition}/fingerprints.png",
@@ -65,6 +66,7 @@ rule execute_deepTools_QC:
                reference_version = REF_VERSION,
                condition = ["G1", "M"],
                suffix = ["png", "tab"])
+
 
 rule all:
     input:
