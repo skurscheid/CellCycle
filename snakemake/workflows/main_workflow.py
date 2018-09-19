@@ -75,9 +75,10 @@ rule execute_deepTools_plotting:
     input:
         expand("{assayType}/{project}/{runID}/deepTools/plotProfile/{subcommand}/{reference_version}/{region}_{suffix}.pdf",
                assayType = "ChIP-Seq",
-               project = PROJECT_ID
+               project = PROJECT_ID,
                reference_version = REF_VERSION,
                runID = RUN_ID,
+	       suffix = "RPKM",
                region = ["allGenes"])
 
 

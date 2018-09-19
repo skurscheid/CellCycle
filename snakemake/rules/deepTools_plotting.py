@@ -73,7 +73,7 @@ rule bamCoverage_normal:
         bam = "{assayType}/{project}/{runID}/samtools/rmdup/{reference_version}/{library}.bam",
         index = "{assayType}/{project}/{runID}/samtools/rmdup/{reference_version}/{library}.bam.bai"
     output:
-        biwig = "{assayType}/{project}/{runID}/deepTools/bamCoverage/{reference_version}/{library}_RPKM.bw"
+        bigwig = "{assayType}/{project}/{runID}/deepTools/bamCoverage/{reference_version}/{library}_RPKM.bw"
     shell:
         """
         {params.deepTools_dir}/bamCoverage --bam {input.bam} \
