@@ -160,7 +160,6 @@ rule plotProfile:
     threads:
         1
     input:
-                    "{assayType}/{project}/{runID}/deepTools/scale-region/{reference_version}/{region}/matrix_{suffix}.gz",
         matrix_gz = "{assayType}/{project}/{runID}/deepTools/computeMatrix/{subcommand}/{reference_version}/{region}/matrix_{suffix}.gz",
     output:
         pdf =  "{assayType}/{project}/{runID}/deepTools/plotProfile/{subcommand}/{reference_version}/{region}_{suffix}.pdf"
