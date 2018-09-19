@@ -151,14 +151,26 @@ rule plotProfile:
     version:
         "1"
     params:
-        deepTools_dir = home + config["program_parameters"]["deepTools"]["deepTools_dir"]
+        deepTools_dir = home + config["program_parameters"]["deepTools"]["deepTools_dir"],
+        dpi = 300,
+        averageType = "mean",
+        plotType = "se",
+        plotTitle = "Mean coverage, all genes, scaled",
+        numPlotsPerRow = 4
     threads:
         1
     input:
+                    "{assayType}/{project}/{runID}/deepTools/scale-region/{reference_version}/{region}/matrix_{suffix}.gz",
         matrix_gz = "{assayType}/{project}/{runID}/deepTools/computeMatrix/{subcommand}/{reference_version}/{region}/matrix_{suffix}.gz",
     output:
-        pdf =  "{assayType}/{project}/{runID}/deepTools/plotProfile/{subcommand}/{reference_version}/{region}_{suffix}.gz"
+        pdf =  "{assayType}/{project}/{runID}/deepTools/plotProfile/{subcommand}/{reference_version}/{region}_{suffix}.pdf"
     shell:
         """
-            {params.deepTools_dir}/plotProfile
+            {params.deepTools_dir}/plotProfile --matrixFile {input.matrix_gz}\
+                                               --outFileName {output.pdf}\
+                                               --dpi {params.dpi}\
+                                               --averageType {params.averageType}\
+                                               --plotType {params.plotType}\
+                                               --plotTitle {params.plotTitle}\
+                                               --numPlotsPerRow {params.numPlotsPerRow}
         """

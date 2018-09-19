@@ -73,7 +73,7 @@ rule execute_deepTools_QC:
 
 rule execute_deepTools_plotting:
     input:
-        expand("{assayType}/{project}/{runID}/deepTools/scale-region/{reference_version}/{region}/matrix_{suffix}.gz",
+        expand("{assayType}/{project}/{runID}/deepTools/plotProfile/{subcommand}/{reference_version}/{region}_{suffix}.pdf",
                assayType = "ChIP-Seq",
                project = PROJECT_ID
                reference_version = REF_VERSION,
