@@ -94,8 +94,9 @@ rule execute_deepTools_plotting:
                project = PROJECT_ID,
                reference_version = REF_VERSION,
                runID = RUN_ID,
+               subcommand = "scale-region",
                region = ["allGenes"],
-	           suffix = "RPKM")
+	       suffix = "RPKM")
 
 
 rule all:
