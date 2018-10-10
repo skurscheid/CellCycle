@@ -155,7 +155,7 @@ rule plotProfile:
         dpi = 300,
         averageType = "mean",
         plotType = "se",
-        plotTitle = "Mean coverage, all genes, scaled",
+        plotTitle = "\"Mean coverage, all genes, scaled\"",
         numPlotsPerRow = 4
     threads:
         1
