@@ -41,6 +41,22 @@ rule execute_collectInsertSize:
                 library = [x for x in config["samples"]["ChIP-Seq"]["LR1807201"]["N08851_SK_LR1807201_SEQ"].keys()],
                 suffix = ["histogram.pdf", "insert_size_metrics.txt"])
 
+rule execute_fastp:
+    input:
+        expand("{assayType}/{project}/{runID}/fastp/trimmed/{library}.{suffix}",
+               assayType = "ChIP-Seq",
+               project = PROJECT_ID,
+               reference_version = REF_VERSION,
+               runID = RUN_ID,
+               library = [x for x in config["samples"]["ChIP-Seq"]["LR1807201"]["N08851_SK_LR1807201_SEQ"].keys()],
+	           suffix = ["end1.fastq.gz", "end2.fastq.gz"]),
+        expand("{assayType}/{project}/{runID}/fastp/report/{library}.{suffix}",
+               assayType = "ChIP-Seq",
+               project = PROJECT_ID,
+               reference_version = REF_VERSION,
+               runID = RUN_ID,
+               library = [x for x in config["samples"]["ChIP-Seq"]["LR1807201"]["N08851_SK_LR1807201_SEQ"].keys()],
+	           suffix = ["report.html", "report.json"])
 
 rule execute_deepTools_QC:
     input:
