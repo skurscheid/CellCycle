@@ -56,7 +56,7 @@ rule execute_fastp:
                reference_version = REF_VERSION,
                runID = RUN_ID,
                library = [x for x in config["samples"]["ChIP-Seq"]["LR1807201"]["N08851_SK_LR1807201_SEQ"].keys()],
-	           suffix = ["report.html", "report.json"])
+	           suffix = ["fastp.html", "fastp.json"])
 
 rule execute_deepTools_QC:
     input:

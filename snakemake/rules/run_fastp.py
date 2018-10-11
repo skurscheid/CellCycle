@@ -31,7 +31,7 @@ rule run_fastp:
     output:
         trimmed_read1 = "{assayType}/{project}/{runID}/fastp/trimmed/{library}.end1.fastq.gz",
         trimmed_read2 = "{assayType}/{project}/{runID}/fastp/trimmed/{library}.end2.fastq.gz",
-        report_html = "{assayType}/{project}/{runID}/fastp/report/{library}.report.html",
-        report_json = "{assayType}/{project}/{runID}/fastp/report/{library}.report.json"
+        report_html = "{assayType}/{project}/{runID}/fastp/report/{library}.fastp.html",
+        report_json = "{assayType}/{project}/{runID}/fastp/report/{library}.fastp.json"
     shell:
         "fastp -i {input.read1} -I {input.read2} -o {output.trimmed_read1} -O {output.trimmed_read2} --html {output.report_html} --json {output.report_json} --thread {threads}"
