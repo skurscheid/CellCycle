@@ -41,6 +41,22 @@ rule execute_collectInsertSize:
                 library = [x for x in config["samples"]["ChIP-Seq"]["LR1807201"]["N08851_SK_LR1807201_SEQ"].keys()],
                 suffix = ["histogram.pdf", "insert_size_metrics.txt"])
 
+rule execute_fastp:
+    input:
+        expand("{assayType}/{project}/{runID}/fastp/trimmed/{library}.{suffix}",
+               assayType = "ChIP-Seq",
+               project = PROJECT_ID,
+               reference_version = REF_VERSION,
+               runID = RUN_ID,
+               library = [x for x in config["samples"]["ChIP-Seq"]["LR1807201"]["N08851_SK_LR1807201_SEQ"].keys()],
+	           suffix = ["end1.fastq.gz", "end2.fastq.gz"]),
+        expand("{assayType}/{project}/{runID}/fastp/report/{library}.{suffix}",
+               assayType = "ChIP-Seq",
+               project = PROJECT_ID,
+               reference_version = REF_VERSION,
+               runID = RUN_ID,
+               library = [x for x in config["samples"]["ChIP-Seq"]["LR1807201"]["N08851_SK_LR1807201_SEQ"].keys()],
+	           suffix = ["fastp.html", "fastp.json"])
 
 rule execute_deepTools_QC:
     input:
@@ -73,12 +89,14 @@ rule execute_deepTools_QC:
 
 rule execute_deepTools_plotting:
     input:
-        expand("{assayType}/{project}/{runID}/deepTools/scale-region/{reference_version}/{region}/matrix_{suffix}.gz",
+        expand("{assayType}/{project}/{runID}/deepTools/plotProfile/{subcommand}/{reference_version}/{region}_{suffix}.pdf",
                assayType = "ChIP-Seq",
-               project = PROJECT_ID
+               project = PROJECT_ID,
                reference_version = REF_VERSION,
                runID = RUN_ID,
-               region = ["allGenes"])
+               subcommand = "scale-region",
+               region = ["allGenes"],
+	       suffix = "RPKM")
 
 
 rule all:
