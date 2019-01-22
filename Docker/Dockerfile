@@ -21,13 +21,15 @@ RUN apt-get install -y --fix-missing --no-install-recommends \
     zlib1g-dev \ 
     libbz2-dev \
     software-properties-common
-RUN wget https://repo.continuum.io/miniconda/Miniconda3-3.7.0-Linux-x86_64.sh -O ~/miniconda.sh
+RUN wget https://repo.continuum.io/miniconda/Miniconda3-4.3.30-Linux-x86_64.sh -O ~/miniconda.sh
 RUN bash ~/miniconda.sh -b -p /app/miniconda
 ENV PATH "/app/miniconda/bin:$PATH"
 
 RUN conda config --add channels defaults
 RUN conda config --add channels bioconda
 RUN conda config --add channels conda-forge
+RUN conda install git=2.20.1
+RUN conda create -n snakemake python=3.5.0 snakemake-minimal=5.4.0
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
